@@ -22,15 +22,13 @@ import Tree from "react-d3-tree";
 
 function App() {
   const { calculateDeterminant, getTree } = useCofactor();
-  const [tree, setTree] = useState(
-    {
-      name: "Determinant",
-      attributes: {
-        tag: "Parent",
-      },
-      children: [],
-    }
-  )
+  const [tree, setTree] = useState({
+    name: "Determinant",
+    attributes: {
+      tag: "Parent",
+    },
+    children: [],
+  });
   const [matrix, setMatrix] = useState([
     [1, 2, 3],
     [4, 5, 6],
@@ -44,79 +42,82 @@ function App() {
     setTree(getTree());
   };
 
+  const handleClickAdd = () => {
+    setResult(calculateDeterminant(matrix));
+    setTree(getTree());
+  };
+
   return (
-    <Container maxWidth="xl">
-      <Box sx={{ my: 4 }}>
-        <TitleBar title="Matrix Determinant by Minors and Cofactors" />
-        <Box sx={{ m: 1, p: 2 }}>
-          <Typography variant="body1" component="div">
-            Matrix
-          </Typography>
-        </Box>
-        <Card>
-          <CardContent>
-            <Table>
-              <TableBody>
-                {matrix.map((row, indexRow) => {
-                  return (
-                    <TableRow key={`row-${indexRow}`}>
-                      {row.map((cell, indexCell) => (
-                        <TableCell key={`cell-${indexCell}`}>{cell}</TableCell>
-                      ))}
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </CardContent>
-          <CardActions>
-            <Grid
-              container
-              component="div"
-              direction="row"
-              justifyContent="flex-end"
-              alignItems="stretch"
-            >
-              <Grid item component="div">
-                <Button variant="contained" color="primary">
-                  <AddSharpIcon />
-                </Button>
-                <Button variant="contained" color="secondary">
-                  <RemoveSharpIcon />
-                </Button>
-              </Grid>
-            </Grid>
-          </CardActions>
-        </Card>
-        <Box sx={{ m: 2 }} >
+    <Box sx={{ width: "100%", m: 1, p: 1 }} height="100vh">
+      <TitleBar title="Matrix Determinant by Minors and Cofactors" />
+      <Box sx={{ m: 1, p: 2 }}>
+        <Typography variant="body1" component="div">
+          Matrix
+        </Typography>
+      </Box>
+      <Card>
+        <CardContent>
+          <Table>
+            <TableBody>
+              {matrix.map((row, indexRow) => {
+                return (
+                  <TableRow key={`row-${indexRow}`}>
+                    {row.map((cell, indexCell) => (
+                      <TableCell key={`cell-${indexCell}`}>{cell}</TableCell>
+                    ))}
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </CardContent>
+        <CardActions>
           <Grid
             container
             component="div"
             direction="row"
-            justifyContent="flex-start"
-            alignItems="flex-end"
-            spacing={2}
+            justifyContent="flex-end"
+            alignItems="stretch"
           >
             <Grid item component="div">
-              <Button variant="contained" color="primary" onClick={handleClick}>
-                Calculate
+              <Button variant="contained" color="primary">
+                <AddSharpIcon />
+              </Button>
+              <Button variant="contained" color="secondary">
+                <RemoveSharpIcon />
               </Button>
             </Grid>
-            <Grid item component="div">
-              <TextField
-                id="result"
-                label="Result"
-                value={result}
-                InputLabelProps={{ readOnly: true }}
-              />
-            </Grid>
           </Grid>
-        </Box>
-        <Box>
-        <Tree data={tree} orientation="vertical" />
-        </Box>
+        </CardActions>
+      </Card>
+      <Box sx={{ m: 2 }}>
+        <Grid
+          container
+          component="div"
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="flex-end"
+          spacing={2}
+        >
+          <Grid item component="div">
+            <Button variant="contained" color="primary" onClick={handleClick}>
+              Calculate
+            </Button>
+          </Grid>
+          <Grid item component="div">
+            <TextField
+              id="result"
+              label="Result"
+              value={result}
+              InputLabelProps={{ readOnly: true }}
+            />
+          </Grid>
+        </Grid>
       </Box>
-    </Container>
+      <Box sx={{ height: "100%" }} minHeight="100%">
+        <Tree data={tree} orientation="vertical" />
+      </Box>
+    </Box>
   );
 }
 
