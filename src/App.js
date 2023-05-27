@@ -18,9 +18,19 @@ import AddSharpIcon from "@mui/icons-material/AddSharp";
 import { TitleBar } from "./components/TitleBar";
 import RemoveSharpIcon from "@mui/icons-material/RemoveSharp";
 import { useCofactor } from "./code/use-Cofactor";
+import Tree from "react-d3-tree";
 
 function App() {
-  const { calculateDeterminant } = useCofactor();
+  const { calculateDeterminant, getTree } = useCofactor();
+  const [tree, setTree] = useState(
+    {
+      name: "Determinant",
+      attributes: {
+        tag: "Parent",
+      },
+      children: [],
+    }
+  )
   const [matrix, setMatrix] = useState([
     [1, 2, 3],
     [4, 5, 6],
@@ -30,9 +40,8 @@ function App() {
   const [result, setResult] = useState("");
 
   const handleClick = () => {
-    const determinant = calculateDeterminant(matrix);
-    console.log(determinant);
-    setResult(determinant);
+    setResult(calculateDeterminant(matrix));
+    setTree(getTree());
   };
 
   return (
@@ -79,7 +88,7 @@ function App() {
             </Grid>
           </CardActions>
         </Card>
-        <Box sx={{ m: 2 }}>
+        <Box sx={{ m: 2 }} >
           <Grid
             container
             component="div"
@@ -104,7 +113,7 @@ function App() {
           </Grid>
         </Box>
         <Box>
-
+        <Tree data={tree} orientation="vertical" />
         </Box>
       </Box>
     </Container>
