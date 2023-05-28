@@ -1,11 +1,12 @@
 import {
+  Alert,
   Box,
   Button,
   Card,
   CardActions,
   CardContent,
-  Container,
   Grid,
+  Snackbar,
   Table,
   TableBody,
   TableCell,
@@ -34,18 +35,60 @@ function App() {
     [4, 5, 6],
     [7, 8, 9],
   ]);
-  const [matrixSize, setmatrixSize] = useState(3);
   const [result, setResult] = useState("");
+  const [open, setOpen] = useState(false);
 
-  const handleClick = () => {
+  const handleResult = () => {
     setResult(calculateDeterminant(matrix));
     setTree(getTree());
   };
 
-  const handleClickAdd = () => {
-    setResult(calculateDeterminant(matrix));
-    setTree(getTree());
+  const handleAdd = () => {
+    setMatrix((prev) => {
+      let newMatrix = prev;
+      newMatrix = newMatrix.map((row) => {
+        row.push(0);
+        return row;
+      });
+      newMatrix.push(Array(prev.length + 1).fill(0));
+      return newMatrix;
+    });
   };
+
+  const handleRemove = () => {
+    if (matrix.length === 2) {
+      setOpen(true);
+    } else {
+      setMatrix((prev) => {
+        let newMatrix = prev;
+        newMatrix = newMatrix.map((row) => {
+          row.pop();
+          return row;
+        });
+        newMatrix.pop();
+        return newMatrix;
+      });
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleChangeValue = (event) => {
+    const ids = event.target.id.split("-");
+    setMatrix((prev) =>
+      prev.map((row, rowIndex) =>
+        rowIndex === parseInt(ids[1])
+          ? row.map((cell, cellIndex) =>
+              cellIndex === parseInt(ids[2]) ? event.target.valueAsNumber : cell
+            )
+          : row
+      )
+    );
+  };
+
+  console.log("La matrix:", matrix);
 
   return (
     <Box sx={{ width: "100%", m: 1, p: 1 }} height="100vh">
@@ -63,7 +106,15 @@ function App() {
                 return (
                   <TableRow key={`row-${indexRow}`}>
                     {row.map((cell, indexCell) => (
-                      <TableCell key={`cell-${indexCell}`}>{cell}</TableCell>
+                      <TableCell key={`cell-${indexCell}`}>
+                        <TextField
+                          type="number"
+                          value={cell}
+                          name={`textField-${indexRow}-${indexCell}`}
+                          id={`textField-${indexRow}-${indexCell}`}
+                          onChange={handleChangeValue}
+                        />
+                      </TableCell>
                     ))}
                   </TableRow>
                 );
@@ -80,10 +131,16 @@ function App() {
             alignItems="stretch"
           >
             <Grid item component="div">
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" onClick={handleAdd}>
                 <AddSharpIcon />
               </Button>
-              <Button variant="contained" color="secondary">
+            </Grid>
+            <Grid item component="div">
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleRemove}
+              >
                 <RemoveSharpIcon />
               </Button>
             </Grid>
@@ -100,7 +157,7 @@ function App() {
           spacing={2}
         >
           <Grid item component="div">
-            <Button variant="contained" color="primary" onClick={handleClick}>
+            <Button variant="contained" color="primary" onClick={handleResult}>
               Calculate
             </Button>
           </Grid>
@@ -117,6 +174,11 @@ function App() {
       <Box sx={{ height: "100%" }} minHeight="100%">
         <Tree data={tree} orientation="vertical" />
       </Box>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          The size of matrix must be 2 or more!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

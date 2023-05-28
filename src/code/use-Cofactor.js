@@ -9,12 +9,10 @@ const useCofactor = () => {
     if (matrix.length !== matrix[0].length) {
       throw new Error("The matrix is not square!");
     }
-    const determinant = calculateDeterminantImplementation({
+    return calculateDeterminantImplementation({
       matrix,
       id: parent,
     });
-    console.log("Tree", tree);
-    return determinant;
   };
 
   const matrixToString = ({ data }) => {
