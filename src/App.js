@@ -88,8 +88,6 @@ function App() {
     );
   };
 
-  console.log("La matrix:", matrix);
-
   return (
     <Box sx={{ width: "100%", m: 1, p: 1 }} height="100vh">
       <TitleBar title="Matrix Determinant by Minors and Cofactors" />
