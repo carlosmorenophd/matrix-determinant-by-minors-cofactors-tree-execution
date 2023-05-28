@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# Programa para calcular la determinante por medio de menores y cofactores, además de obtener su árbol de ejecución (Español).
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introducción
 
-## Available Scripts
+El presente programa busca resolver la determinante de una matriz cuadrada mediante él suso de menores y cofactores, además de generar el árbol de ejecución de cada una de las submatrices que genera.
 
-In the project directory, you can run:
+## Algoritmo 
+El método de los menores y cofactores es un enfoque utilizado para calcular el determinante de una matriz cuadrada. El proceso se basa en la descomposición de la matriz original en submatrices más pequeñas, conocidas como menores, y en el cálculo de los cofactores correspondientes a esos menores.
 
-### `npm start`
+El procedimiento general del método de los menores y cofactores es el siguiente:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Dada una matriz cuadrada de tamaño $n x n$, se selecciona una fila o columna de la matriz para realizar el cálculo del determinante. Esto se puede hacer de manera arbitraria.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Para cada elemento de la fila o columna seleccionada, se calcula el menor asociado eliminando la fila y columna correspondientes a ese elemento.
 
-### `npm test`
+A cada menor se le asigna un cofactor, que se obtiene multiplicando el menor por $(-1)^(i + j)$, donde $i$ es el número de fila y $j$ es el número de columna del elemento en cuestión.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Se calcula el determinante sumando los productos de los elementos de la fila o columna seleccionada por sus respectivos cofactores.
 
-### `npm run build`
+Si se seleccionó una fila para el cálculo del determinante, se utiliza la fórmula:
+ ${determinante} = a_1 * C_1 + a_2 * C_2 + ... + a_n * C_n$,
+donde ai son los elementos de la fila seleccionada y $C_i$ son sus respectivos cofactores.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Si se seleccionó una columna para el cálculo del determinante, se utiliza la fórmula:
+${determinante} = a_1 * C_1 + b_1 * C_2 + ... + n_1 * C_n$,
+donde ai son los elementos de la columna seleccionada y Ci son sus respectivos cofactores.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Se repite el proceso recursivamente para calcular los determinantes de los menores de orden inferior hasta llegar a matrices 2x2, para las cuales se puede aplicar la fórmula directa.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Finalmente, se obtiene el determinante completo de la matriz original.
 
-### `npm run eject`
+Es importante destacar que este método puede ser computacionalmente costoso para matrices grandes debido a la necesidad de calcular determinantes de menores de orden inferior de manera recursiva. Por lo tanto, existen métodos más eficientes para el cálculo de determinantes en matrices de mayor tamaño, como la eliminación de Gauss o la descomposición LU.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Ejemplo del árbol de ejecucción
+![Ejemplo arbol de ejecución](assert/menoresYCofactores.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Program to calculate the determinant by means of minors and cofactors, in addition to obtaining its execution tree (English).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Introduction
 
-## Learn More
+This program seeks to solve the determinant of a square matrix through the use of minors and cofactors, in addition to generating the execution tree of each of the submatrices that it generates.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Algorithm
+The method of minors and cofactors is an approach used to calculate the determinant of a square matrix. The process is based on decomposing the original matrix into smaller submatrices, known as minors, and calculating the cofactors corresponding to those minors.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The general procedure of the method of minors and cofactors is as follows:
 
-### Code Splitting
+Given a square matrix of size $n x n$, a row or column of the matrix is selected to perform the calculation of the determinant. This can be done arbitrarily.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+For each element in the selected row or column, the associated minor is calculated by removing the row and column corresponding to that element.
 
-### Analyzing the Bundle Size
+Each minor is assigned a cofactor, which is obtained by multiplying the minor by $(-1)^(i + j)$, where $i$ is the row number and $j$ is the column number of the element in question.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The determinant is calculated by adding the products of the elements of the selected row or column by their respective cofactors.
 
-### Making a Progressive Web App
+If a row was selected for the calculation of the determinant, the formula is used:
+  ${determinant} = a_1 * C_1 + a_2 * C_2 + ... + a_n * C_n$,
+where ai are the elements of the selected row and $C_i$ are their respective cofactors.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+If a column was selected for the calculation of the determinant, the formula is used:
+${determinant} = a_1 * C_1 + b_1 * C_2 + ... + n_1 * C_n$,
+where ai are the elements of the selected column and Ci are their respective cofactors.
 
-### Advanced Configuration
+The process is repeated recursively to calculate the determinants of lower order minors until arriving at 2x2 matrices, for which the direct formula can be applied.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Finally, the complete determinant of the original matrix is obtained.
 
-### Deployment
+It is important to note that this method can be computationally expensive for large matrices due to the need to compute lower order determinants recursively. Therefore, there are more efficient methods for calculating determinants on larger matrices, such as Gaussian elimination or LU decomposition
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+## Execution Tree Example
+![Execution Tree Example](assert/menoresYCofactores.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+# Acerca del autor / About the author
+
+* Estuandite de Doctorado: Juan Carlos Moreno Sanchez 
+* carlos.moreno.phd@gmail.com
+* jcmorenos@alumno.uaemex.mx
